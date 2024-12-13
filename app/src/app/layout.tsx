@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
     title: 'RIT TitleCraft',
     description: 'Generate professional title pages for assignments and reports at RIT, Bangalore',
+    icons: {
+        icon: "/favicon.svg"
+    }
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
