@@ -7,6 +7,8 @@ import os
 
 app = FastAPI()
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 def delete_file(path: str):
     """Delete the file from the system."""
@@ -18,7 +20,8 @@ def delete_file(path: str):
 async def generate_submission(
     data: SubmissionParams, background_tasks: BackgroundTasks
 ):
-    doc = Document("template.docx")
+    template_path = os.path.join(BASE_DIR, "template.docx")
+    doc = Document(template_path)
 
     docx_path = gen_filled_doc(data, doc)
 
