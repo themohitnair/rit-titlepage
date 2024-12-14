@@ -200,7 +200,7 @@ const TitlePageForm: React.FC = () => {
                                     <TableRow key={index}>
                                         <TableCell>
                                             <Input
-                                                placeholder="Name"
+                                                placeholder="e.g. John Doe"
                                                 value={submitter.name}
                                                 onChange={(e) => handleSubmitterChange(index, 'name', e.target.value)}
                                                 required
@@ -208,7 +208,7 @@ const TitlePageForm: React.FC = () => {
                                         </TableCell>
                                         <TableCell>
                                             <Input
-                                                placeholder="USN"
+                                                placeholder="e.g. 1MS22CE001"
                                                 value={submitter.usn}
                                                 onChange={(e) => handleSubmitterChange(index, 'usn', e.target.value)}
                                                 required
@@ -256,6 +256,7 @@ const TitlePageForm: React.FC = () => {
                         <Label htmlFor="faculty_name_with_title">Faculty Name with Title</Label>
                         <Input
                             id="faculty_name_with_title"
+                            placeholder="e.g. Mr. Gustavo Fring"
                             value={formData.faculty_name_with_title}
                             onChange={(e) => handleInputChange('faculty_name_with_title', e.target.value)}
                             required
@@ -267,6 +268,7 @@ const TitlePageForm: React.FC = () => {
                         <Input
                             id="designation"
                             value={formData.designation}
+                            placeholder="e.g. Associate Professor"
                             onChange={(e) => handleInputChange('designation', e.target.value)}
                             required
                         />
