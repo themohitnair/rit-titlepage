@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export function Footer() {
     return (
@@ -15,6 +16,15 @@ export function Footer() {
                         Mohit Nair
                     </Link>
                 </p>
+                <div className="flex items-center">
+                    <span className="mr-2 text-sm text-muted-foreground">Hosted by</span>
+                    <Image
+                        src="/banner.png"
+                        alt="Web Hosting Provider"
+                        width={200}
+                        height={100}
+                    />
+                </div>
                 <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
                     <Link
                         href="https://github.com/themohitnair/rit-titlepage"
