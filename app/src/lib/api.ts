@@ -1,7 +1,7 @@
 import { SubmissionParams } from './types'
 
 export async function generateTitlePage(params: SubmissionParams): Promise<Blob> {
-    const apiUrl = process.env.RIT_TITLEPAGE_API_URL;
+    const apiUrl = process.env.NEXT_PUBLIC_RIT_TITLEPAGE_API_URL;
 
     if (!apiUrl) {
         throw new Error('RIT_TITLEPAGE_API_URL is not defined in the environment variables');
