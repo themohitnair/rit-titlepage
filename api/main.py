@@ -10,7 +10,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["https://rit-titlepage.vercel.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -41,9 +41,3 @@ async def generate_submission(
         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         filename="submission.docx",
     )
-
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app="main:app", host="localhost", port=8000, reload=True)
