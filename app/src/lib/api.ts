@@ -1,7 +1,7 @@
 import { SubmissionParams } from './types'
 
 export async function generateTitlePage(params: SubmissionParams): Promise<Blob> {
-    const response = await fetch('http://localhost:8000/generate/', {
+    const response = await fetch('https://rit-titlepage.onrender.com/generate/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

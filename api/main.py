@@ -10,7 +10,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://rit-titlepage.vercel.com"],
+    allow_origins=["https://rit-titlepage.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
