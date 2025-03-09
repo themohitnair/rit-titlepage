@@ -15,16 +15,19 @@ export function Footer() {
                         Mohit Nair
                     </Link>
                 </p>
-                <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-                    <Link
-                        href="https://github.com/themohitnair/rit-titlepage"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-medium underline underline-offset-4"
-                    >
-                        Source code
-                    </Link>
-                </p>
+                <div className="text-center text-sm leading-loose text-muted-foreground md:text-left">
+                    <p>
+                        <Link
+                            href="https://github.com/themohitnair/rit-titlepage"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-medium underline underline-offset-4"
+                        >
+                            Source code
+                        </Link>
+                    </p>
+                    <p className="text-xs text-muted-foreground">Hosted on AWS EC2 t2.micro</p>
+                </div>
             </div>
         </footer>
     )
