@@ -41,3 +41,9 @@ async def generate_submission(
         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         filename="submission.docx",
     )
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=8000)
