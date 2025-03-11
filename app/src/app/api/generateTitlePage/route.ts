@@ -1,5 +1,6 @@
-// app/api/generateTitlePage/route.ts
 import { NextRequest, NextResponse } from 'next/server';
+
+export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,9 +15,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Call FastAPI endpoint
     const fastApiResponse = await fetch(`${apiUrl}/generate/`, {
       method: 'POST',
       headers: {
+        'Origin': 'https://rit-titlepage.vercel.app',
         'Content-Type': 'application/json',
         'x-api-key': apiKey,
       },
@@ -24,8 +27,10 @@ export async function POST(request: NextRequest) {
     });
 
     if (!fastApiResponse.ok) {
+      const errorDetails = await fastApiResponse.text();
+      console.error('FastAPI error:', errorDetails);
       return NextResponse.json(
-        { error: 'Failed to generate file' },
+        { error: 'Failed to generate file', details: errorDetails },
         { status: 500 }
       );
     }
@@ -41,7 +46,7 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error(error);
+    console.error('Next.js API route error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
