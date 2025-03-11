@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Include the Origin header if required by your backend
-    const fastApiResponse = await fetch(`${apiUrl}/generate/`, {
+    const fastApiResponse = await fetch(`${apiUrl}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
