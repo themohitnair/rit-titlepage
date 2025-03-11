@@ -6,14 +6,14 @@ from docx import Document
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
-app = FastAPI()
+app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://rit-titlepage.vercel.app"],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["POST"],
+    allow_headers=["Content-Type"],
 )
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -41,9 +41,3 @@ async def generate_submission(
         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         filename="submission.docx",
     )
-
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app, host="0.0.0.0", port=8000)
