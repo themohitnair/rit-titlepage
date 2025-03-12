@@ -183,7 +183,7 @@ const TitlePageForm: React.FC = () => {
               id="subject_name"
               value={formData.subject_name}
               onChange={(e) => handleInputChange("subject_name", e.target.value)}
-              placeholder="e.g. Introduction to Computer Science"
+              placeholder="e.g. Data Structures"
               required
             />
           </div>
@@ -211,7 +211,7 @@ const TitlePageForm: React.FC = () => {
                 id="branch"
                 value={formData.branch}
                 onChange={(e) => handleInputChange("branch", e.target.value)}
-                placeholder="e.g. Computer Science Engineering"
+                placeholder="e.g. Information Science Engineering"
                 required
               />
             </div>
@@ -225,7 +225,7 @@ const TitlePageForm: React.FC = () => {
               id="topic_name"
               value={formData.topic_name}
               onChange={(e) => handleInputChange("topic_name", e.target.value)}
-              placeholder="e.g. Analysis of Sorting Algorithms"
+              placeholder="e.g. 20 Solved Leetcode Problems"
               required
             />
           </div>
@@ -321,7 +321,7 @@ const TitlePageForm: React.FC = () => {
             </Label>
             <Input
               id="faculty_name_with_title"
-              placeholder="e.g. Mr. Gustavo Fring"
+              placeholder="e.g. Mr. Shivananda S"
               value={formData.faculty_name_with_title}
               onChange={(e) => handleInputChange("faculty_name_with_title", e.target.value)}
               required
