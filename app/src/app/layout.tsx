@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://rit-titlecraft.vercel.app",
+    url: "https://rit-titlepage.vercel.app",
     title: "RIT TitleCraft",
     description: "Generate professional title pages for assignments and reports at RIT, Bangalore",
   }
