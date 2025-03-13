@@ -243,12 +243,13 @@ const TitlePageForm: React.FC = () => {
                 required
                 className="focus-visible:ring-primary/50"
               />
+              <p className="text-xs text-muted-foreground mt-1">
+                Please enter the full name of your branch (e.g., &quot;Information Science and Engineering&quot; instead of &quot;ISE&quot;)
+              </p>
             </div>
           </div>
 
-          <p className="text-xs text-muted-foreground mt-1">
-            Please enter the full name of your branch (e.g., &quot;Information Science and Engineering&quot; instead of &quot;ISE&quot;)
-          </p>
+          
 
           <div className="space-y-2">
             <Label htmlFor="topic_name" className="text-sm font-medium flex items-center gap-2">
