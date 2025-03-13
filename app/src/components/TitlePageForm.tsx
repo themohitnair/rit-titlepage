@@ -9,7 +9,18 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { AlertCircle, Download, Loader2, Plus, Trash2, Users } from "lucide-react"
+import {
+  AlertCircle,
+  Download,
+  Loader2,
+  Plus,
+  Trash2,
+  Users,
+  BookOpen,
+  School,
+  GraduationCap,
+  FileText,
+} from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Separator } from "@/components/ui/separator"
@@ -129,22 +140,32 @@ const TitlePageForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Card className="w-full max-w-3xl mx-auto shadow-lg border-muted/40">
-        <CardHeader className="bg-muted/20 pb-4">
-          <div className="flex items-center gap-2">
-            <Badge variant="outline" className="px-2 py-1 text-xs font-medium">
-              {formData.submission_type}
-            </Badge>
-            <CardTitle className="text-2xl sm:text-3xl">Generate Title Page</CardTitle>
+      <Card className="w-full max-w-3xl mx-auto shadow-xl border-muted/40 overflow-hidden">
+        <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 pb-6">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="bg-primary/10 p-2 rounded-full">
+              <FileText className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <Badge
+                variant="outline"
+                className="px-3 py-1 text-xs font-medium bg-white/80 dark:bg-slate-900/80 shadow-sm mb-1"
+              >
+                {formData.submission_type}
+              </Badge>
+              <CardTitle className="text-2xl sm:text-3xl font-bold">Generate Title Page</CardTitle>
+            </div>
           </div>
-          <CardDescription className="text-muted-foreground">
-            Fill in the details for your academic submission
+          <CardDescription className="text-muted-foreground text-sm">
+            Fill in the details below to create a professional academic title page for your submission
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-6 space-y-6">
+
+        <CardContent className="p-6 space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="submission_type" className="text-sm font-medium">
+              <Label htmlFor="submission_type" className="text-sm font-medium flex items-center gap-2">
+                <FileText className="h-4 w-4 text-muted-foreground" />
                 Submission Type
               </Label>
               <Select
@@ -162,21 +183,24 @@ const TitlePageForm: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="subject_code" className="text-sm font-medium">
+              <Label htmlFor="subject_code" className="text-sm font-medium flex items-center gap-2">
+                <BookOpen className="h-4 w-4 text-muted-foreground" />
                 Subject Code
               </Label>
               <Input
                 id="subject_code"
                 value={formData.subject_code}
                 onChange={(e) => handleInputChange("subject_code", e.target.value)}
-                placeholder="e.g. CS101"
+                placeholder="e.g. IS33"
                 required
+                className="focus-visible:ring-primary/50"
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="subject_name" className="text-sm font-medium">
+            <Label htmlFor="subject_name" className="text-sm font-medium flex items-center gap-2">
+              <BookOpen className="h-4 w-4 text-muted-foreground" />
               Subject Name
             </Label>
             <Input
@@ -185,12 +209,14 @@ const TitlePageForm: React.FC = () => {
               onChange={(e) => handleInputChange("subject_name", e.target.value)}
               placeholder="e.g. Data Structures"
               required
+              className="focus-visible:ring-primary/50"
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="semester_number" className="text-sm font-medium">
+              <Label htmlFor="semester_number" className="text-sm font-medium flex items-center gap-2">
+                <School className="h-4 w-4 text-muted-foreground" />
                 Semester Number
               </Label>
               <Input
@@ -200,11 +226,13 @@ const TitlePageForm: React.FC = () => {
                 onChange={(e) => handleInputChange("semester_number", Number.parseInt(e.target.value))}
                 required
                 min="1"
+                className="focus-visible:ring-primary/50"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="branch" className="text-sm font-medium">
+              <Label htmlFor="branch" className="text-sm font-medium flex items-center gap-2">
+                <GraduationCap className="h-4 w-4 text-muted-foreground" />
                 Branch
               </Label>
               <Input
@@ -213,12 +241,18 @@ const TitlePageForm: React.FC = () => {
                 onChange={(e) => handleInputChange("branch", e.target.value)}
                 placeholder="e.g. Information Science Engineering"
                 required
+                className="focus-visible:ring-primary/50"
               />
             </div>
           </div>
 
+          <p className="text-xs text-muted-foreground mt-1">
+            Please enter the full name of your branch (e.g., &quot;Information Science and Engineering&quot; instead of &quot;ISE&quot;)
+          </p>
+
           <div className="space-y-2">
-            <Label htmlFor="topic_name" className="text-sm font-medium">
+            <Label htmlFor="topic_name" className="text-sm font-medium flex items-center gap-2">
+              <FileText className="h-4 w-4 text-muted-foreground" />
               Topic Name
             </Label>
             <Input
@@ -227,21 +261,24 @@ const TitlePageForm: React.FC = () => {
               onChange={(e) => handleInputChange("topic_name", e.target.value)}
               placeholder="e.g. 20 Solved Leetcode Problems"
               required
+              className="focus-visible:ring-primary/50"
             />
           </div>
 
-          <Separator />
+          <Separator className="my-2" />
 
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-muted-foreground" />
+                <div className="bg-primary/10 p-1.5 rounded-full">
+                  <Users className="h-4 w-4 text-primary" />
+                </div>
                 <Label className="text-sm font-medium">Submitters</Label>
               </div>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="secondary" className="text-xs px-3 py-1">
                       {submitters.length}/7 submitters
                     </Badge>
                   </TooltipTrigger>
@@ -252,9 +289,9 @@ const TitlePageForm: React.FC = () => {
               </TooltipProvider>
             </div>
 
-            <ScrollArea className="h-[200px] rounded-md border">
+            <ScrollArea className="h-[200px] rounded-md border bg-white/50 dark:bg-slate-950/50 shadow-sm">
               <Table>
-                <TableHeader className="sticky top-0 bg-background z-10">
+                <TableHeader className="sticky top-0 bg-muted/50 backdrop-blur-sm z-10">
                   <TableRow>
                     <TableHead className="w-[50%]">Name</TableHead>
                     <TableHead className="w-[40%]">USN</TableHead>
@@ -263,22 +300,32 @@ const TitlePageForm: React.FC = () => {
                 </TableHeader>
                 <TableBody>
                   {submitters.map((submitter, index) => (
-                    <TableRow key={index}>
+                    <TableRow key={index} className="hover:bg-muted/30">
                       <TableCell>
                         <Input
-                          placeholder="e.g. John Doe"
+                          placeholder="e.g. Mohit Nair"
                           value={submitter.name}
                           onChange={(e) => handleSubmitterChange(index, "name", e.target.value)}
                           required
+                          className="focus-visible:ring-primary/50"
                         />
                       </TableCell>
                       <TableCell>
-                        <Input
-                          value={submitter.usn.startsWith("1MS") ? submitter.usn : `1MS${submitter.usn}`}
-                          onChange={(e) => handleSubmitterChange(index, "usn", e.target.value)}
-                          placeholder="USN"
-                          required
-                        />
+                        <div className="flex items-center">
+                          <div className="bg-muted/50 px-2 py-2 border border-r-0 rounded-l-md text-muted-foreground font-medium">
+                            1MS
+                          </div>
+                          <Input
+                            value={submitter.usn.startsWith("1MS") ? submitter.usn.substring(3) : submitter.usn}
+                            onChange={(e) => {
+                              const value = e.target.value
+                              handleSubmitterChange(index, "usn", `1MS${value}`)
+                            }}
+                            placeholder="Enter USN"
+                            required
+                            className="focus-visible:ring-primary/50 rounded-l-none"
+                          />
+                        </div>
                       </TableCell>
                       <TableCell>
                         {index > 0 && (
@@ -287,7 +334,7 @@ const TitlePageForm: React.FC = () => {
                             variant="ghost"
                             size="icon"
                             onClick={() => removeSubmitter(index)}
-                            className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                            className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10 rounded-full"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
@@ -300,7 +347,13 @@ const TitlePageForm: React.FC = () => {
             </ScrollArea>
 
             {submitters.length < 7 && (
-              <Button type="button" variant="outline" size="sm" className="mt-2" onClick={addSubmitter}>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="mt-2 bg-white dark:bg-slate-900 hover:bg-muted/80"
+                onClick={addSubmitter}
+              >
                 <Plus className="mr-2 h-4 w-4" /> Add Submitter
               </Button>
             )}
@@ -313,10 +366,11 @@ const TitlePageForm: React.FC = () => {
             )}
           </div>
 
-          <Separator />
+          <Separator className="my-2" />
 
           <div className="space-y-2">
-            <Label htmlFor="faculty_name_with_title" className="text-sm font-medium">
+            <Label htmlFor="faculty_name_with_title" className="text-sm font-medium flex items-center gap-2">
+              <Users className="h-4 w-4 text-muted-foreground" />
               Faculty Name with Title
             </Label>
             <Input
@@ -325,11 +379,13 @@ const TitlePageForm: React.FC = () => {
               value={formData.faculty_name_with_title}
               onChange={(e) => handleInputChange("faculty_name_with_title", e.target.value)}
               required
+              className="focus-visible:ring-primary/50"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="designation" className="text-sm font-medium">
+            <Label htmlFor="designation" className="text-sm font-medium flex items-center gap-2">
+              <GraduationCap className="h-4 w-4 text-muted-foreground" />
               Designation
             </Label>
             <Input
@@ -338,12 +394,14 @@ const TitlePageForm: React.FC = () => {
               placeholder="e.g. Associate Professor"
               onChange={(e) => handleInputChange("designation", e.target.value)}
               required
+              className="focus-visible:ring-primary/50"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="from_ay" className="text-sm font-medium">
+              <Label htmlFor="from_ay" className="text-sm font-medium flex items-center gap-2">
+                <School className="h-4 w-4 text-muted-foreground" />
                 From Academic Year
               </Label>
               <Input
@@ -352,10 +410,12 @@ const TitlePageForm: React.FC = () => {
                 value={formData.from_ay}
                 onChange={(e) => handleInputChange("from_ay", Number.parseInt(e.target.value))}
                 required
+                className="focus-visible:ring-primary/50"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="to_ay" className="text-sm font-medium">
+              <Label htmlFor="to_ay" className="text-sm font-medium flex items-center gap-2">
+                <School className="h-4 w-4 text-muted-foreground" />
                 To Academic Year
               </Label>
               <Input
@@ -364,12 +424,19 @@ const TitlePageForm: React.FC = () => {
                 value={formData.to_ay}
                 onChange={(e) => handleInputChange("to_ay", Number.parseInt(e.target.value))}
                 required
+                className="focus-visible:ring-primary/50"
               />
             </div>
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col sm:flex-row gap-3 p-6 bg-muted/10 border-t">
-          <Button type="submit" className="w-full sm:w-auto" disabled={isLoading} size="lg">
+
+        <CardFooter className="flex flex-col sm:flex-row gap-3 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 border-t">
+          <Button
+            type="submit"
+            className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-md transition-all"
+            disabled={isLoading}
+            size="lg"
+          >
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generating...
@@ -382,7 +449,7 @@ const TitlePageForm: React.FC = () => {
             <Button
               type="button"
               variant="outline"
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto bg-white dark:bg-slate-900 hover:bg-muted/80"
               size="lg"
               onClick={() => window.open(downloadUrl, "_blank")}
             >
@@ -391,7 +458,7 @@ const TitlePageForm: React.FC = () => {
           )}
         </CardFooter>
         {error && (
-          <Alert variant="destructive" className="mt-4 mx-6 mb-6">
+          <Alert variant="destructive" className="mt-0 mx-6 mb-6">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
