@@ -13,6 +13,13 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://rit-titlecraft.vercel.app",
+    title: "RIT TitleCraft",
+    description: "Generate professional title pages for assignments and reports at RIT, Bangalore",
+  }
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
