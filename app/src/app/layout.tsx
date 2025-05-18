@@ -9,7 +9,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "RIT TitleCraft",
+  title: "ritlepage",
   description:
     "Generate professional title pages for assignments and reports at RIT, Bangalore",
   icons: {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://rit-titlepage.vercel.app",
-    title: "RIT TitleCraft",
+    title: "ritlepage",
     description:
       "Generate professional title pages for assignments and reports at RIT, Bangalore",
   },
