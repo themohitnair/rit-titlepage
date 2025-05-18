@@ -1,14 +1,18 @@
-import Link from 'next/link'
-import { Code2, Server } from "lucide-react"
-import { Separator } from "@/components/ui/separator"
-import { Button } from "@/components/ui/button"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import Link from "next/link";
+import { Code2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export function Footer() {
-    return (
-        <footer className="py-6 md:px-8 md:py-0 mx-auto">
-            <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+  return (
+    <footer className="py-6 md:px-8 md:py-0 mx-auto">
+      <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <span>Developed by</span>
           <TooltipProvider>
             <Tooltip>
@@ -30,7 +34,7 @@ export function Footer() {
             </Tooltip>
           </TooltipProvider>
         </div>
-        
+
         <div className="flex items-center gap-4 md:gap-6 mt-4 md:mt-0">
           <TooltipProvider>
             <Tooltip>
@@ -51,13 +55,8 @@ export function Footer() {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <Separator orientation="vertical" className="h-6" />
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Server className="h-3 w-3" />
-            <span>Hosted on AWS EC2 t2.micro</span>
-          </div>
         </div>
-            </div>
-        </footer>
-    )
+      </div>
+    </footer>
+  );
 }

@@ -1,6 +1,7 @@
-from pydantic import BaseModel
-from typing import Dict
 from enum import Enum
+from typing import Dict
+
+from pydantic import BaseModel
 
 
 class SubmissionType(Enum):
@@ -9,7 +10,7 @@ class SubmissionType(Enum):
 
 
 class SubmissionParams(BaseModel):
-    submission_type: SubmissionType  # Report or Assignment
+    submission_type: str  # Now accepts any string instead of enum
     subject_name: str  # Name of the Subject in full
     subject_code: str  # Subject Code
     semester_number: int  # Semester number

@@ -1,13 +1,13 @@
-import TitlePageForm from "@/components/TitlePageForm"
+import TitlePageForm from "@/components/TitlePageForm";
+import { Header } from "@/components/Header";
 
 export default function Home() {
   return (
     <div className="py-6 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8">RIT TitleCraft</h1>
+      <div className="max-w-4xl mx-auto">
+        <Header />
         <TitlePageForm />
       </div>
     </div>
-  )
+  );
 }
-

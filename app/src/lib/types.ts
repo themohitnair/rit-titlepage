@@ -1,10 +1,5 @@
-export enum SubmissionType {
-    ASSIGNMENT = "assignment",
-    REPORT = "report"
-}
-
 export interface SubmissionParams {
-    submission_type: SubmissionType;
+    submission_type: string;
     subject_name: string;
     subject_code: string;
     semester_number: number;
