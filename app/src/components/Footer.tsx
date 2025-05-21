@@ -41,7 +41,7 @@ export function Footer() {
               <TooltipTrigger asChild>
                 <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
                   <Link
-                    href="https://github.com/themohitnair/rit-titlepage"
+                    href="https://github.com/themohitnair/ritlepage"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Source code"

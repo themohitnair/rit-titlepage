@@ -235,18 +235,20 @@ const TitlePageForm: React.FC = () => {
                 type="number"
                 value={formData.semester_number}
                 onChange={(e) => {
-                  let value = Number.parseInt(e.target.value);
-                  if (value > 8) {
-                    value = 1;
-                  } else if (value < 1 || isNaN(value)) {
-                    value = 1;
+                  const inputValue = e.target.value;
+                  if (inputValue === "" || /^\d+$/.test(inputValue)) {
+                    handleInputChange(
+                      "semester_number",
+                      inputValue === "" ? "" : parseInt(inputValue),
+                    );
                   }
-                  handleInputChange("semester_number", value);
                 }}
                 onBlur={(e) => {
-                  const value = Number.parseInt(e.target.value);
-                  if (value > 8 || value < 1 || isNaN(value)) {
+                  const value = parseInt(e.target.value);
+                  if (isNaN(value) || value < 1) {
                     handleInputChange("semester_number", 1);
+                  } else if (value > 8) {
+                    handleInputChange("semester_number", 8);
                   }
                 }}
                 required
