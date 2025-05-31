@@ -221,6 +221,9 @@ const TitlePageForm: React.FC = () => {
                 required
                 className="h-9 focus-visible:ring-primary/50"
               />
+              <p className="text-xs text-muted-foreground">
+                Text will appear exactly as entered in the document
+              </p>
             </div>
 
             <div className="space-y-1">
@@ -296,6 +299,9 @@ const TitlePageForm: React.FC = () => {
               required
               className="h-9 focus-visible:ring-primary/50"
             />
+            <p className="text-xs text-muted-foreground">
+              Text will appear exactly as entered in the document
+            </p>
           </div>
 
           <Separator className="my-2" />

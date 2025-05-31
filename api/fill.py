@@ -10,8 +10,8 @@ def gen_filled_doc(data: SubmissionParams, doc: Document):
     for paragraph in doc.paragraphs:
         for run in paragraph.runs:
             replace_text(run, "submission_type", data.submission_type)
-            replace_text(run, "topic_name", data.topic_name.title())
-            replace_text(run, "subject_name", data.subject_name.title())
+            replace_text(run, "topic_name", data.topic_name)
+            replace_text(run, "subject_name", data.subject_name)
             replace_text(run, "subject_code", data.subject_code.upper())
             replace_text(run, "semester_number", str(data.semester_number))
             replace_text(run, "branch", data.branch.title())
