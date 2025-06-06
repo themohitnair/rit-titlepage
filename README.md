@@ -1,6 +1,6 @@
 # ritlepage [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/themohitnair/rit-titlepage)
 
-A title-page maker for project reports required for projects and assignments in Ramaiah Institute of Technology. Use it [here](https://ritlepage.vercel.app)
+A title-page maker for project reports required for projects and assignments in Ramaiah Institute of Technology. Use it [at this link](https://ritlepage.vercel.app)
 
 ## Instructions for use
 
