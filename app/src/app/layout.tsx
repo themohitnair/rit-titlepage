@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -32,9 +32,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {process.env.NEXT_PUBLIC_GA_ID && (
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-      )}
       <body
         className={`${inter.className} min-h-screen flex flex-col bg-background text-foreground`}
       >
@@ -44,6 +41,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
