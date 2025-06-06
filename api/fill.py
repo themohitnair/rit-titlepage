@@ -19,7 +19,6 @@ def gen_filled_doc(data: SubmissionParams, doc: Document):
             replace_text(run, "semester_number", str(data.semester_number))
             replace_text(run, "branch", data.branch.title())
 
-            # Handle submitters separately as they require special logic
             process_submitters(run, data.submitters)
 
             replace_text(run, "faculty_name", data.faculty_name_with_title.title())
@@ -27,7 +26,6 @@ def gen_filled_doc(data: SubmissionParams, doc: Document):
             replace_text(run, "from_ay", str(data.from_ay))
             replace_text(run, "to_ay", str(data.to_ay))
 
-    # Add borders after text processing
     add_page_border_and_margins(doc)
 
     temp_docx_path = "frontpage.docx"
@@ -36,7 +34,6 @@ def gen_filled_doc(data: SubmissionParams, doc: Document):
 
 
 def process_submitters(run, submitters):
-    """Process submitter placeholders in the document."""
     for i in range(1, 8):
         placeholder = f"submitter{i}"
         if placeholder in run.text:
@@ -50,10 +47,8 @@ def process_submitters(run, submitters):
 
 
 def add_page_border_and_margins(doc):
-    """Add page borders with precise margin control."""
     section = doc.sections[0]
 
-    # Set page margins
     section.top_margin = Inches(1)
     section.bottom_margin = Inches(1)
     section.left_margin = Inches(1)
@@ -63,14 +58,11 @@ def add_page_border_and_margins(doc):
     pgBorders = OxmlElement("w:pgBorders")
     pgBorders.set(qn("w:offsetFrom"), "page")
 
-    # Define border properties without namespace prefixes
-    border_attrs = {"val": "single", "sz": "12", "space": "24", "color": "000000"}
+    border_attrs = {"val": "single", "sz": "30", "space": "24", "color": "000000"}
 
-    # Add borders for all sides
     for side in ["top", "left", "bottom", "right"]:
         border = OxmlElement(f"w:{side}")
 
-        # Use qn() when setting attributes
         for attr, value in border_attrs.items():
             border.set(qn(f"w:{attr}"), value)
 

@@ -54,6 +54,7 @@ const TitlePageForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showCompatibilityWarning, setShowCompatibilityWarning] = useState(false);
 
   const handleSubmitterChange = (
     index: number,
@@ -138,10 +139,12 @@ const TitlePageForm: React.FC = () => {
     }
     setIsLoading(true);
     setError(null);
+    setShowCompatibilityWarning(false); // Reset warning on new submission
     try {
       const response = await generateTitlePage(formData);
       const url = URL.createObjectURL(response);
       setDownloadUrl(url);
+      setShowCompatibilityWarning(true); // Show compatibility warning after successful generation
     } catch (error) {
       console.error("Error generating title page:", error);
       setError(
@@ -519,10 +522,21 @@ const TitlePageForm: React.FC = () => {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
+
+          {showCompatibilityWarning && (
+            <Alert className="mt-3">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Important: Document Compatibility Notice</AlertTitle>
+              <AlertDescription>
+                For best results on mobile devices, open this document in <strong>Microsoft Word</strong> or <strong>Office 365</strong>. 
+                Google Docs may not display the page border correctly and could remove formatting elements from the document.
+              </AlertDescription>
+            </Alert>
+          )}
         </form>
       </div>
     </div>
   );
 };
 
-export default TitlePageForm;
+export default TitlePageForm
