@@ -1,5 +1,8 @@
 from docx import Document
+from docx.oxml import OxmlElement
 from models import SubmissionParams
+from docx.shared import Inches
+from docx.oxml.shared import qn
 
 
 def gen_filled_doc(data: SubmissionParams, doc: Document):
@@ -24,6 +27,9 @@ def gen_filled_doc(data: SubmissionParams, doc: Document):
             replace_text(run, "from_ay", str(data.from_ay))
             replace_text(run, "to_ay", str(data.to_ay))
 
+    # Add borders after text processing
+    add_page_border_and_margins(doc)
+
     temp_docx_path = "frontpage.docx"
     doc.save(temp_docx_path)
     return temp_docx_path
@@ -41,3 +47,33 @@ def process_submitters(run, submitters):
                 )
             else:
                 run.text = run.text.replace(placeholder, "")
+
+
+def add_page_border_and_margins(doc):
+    """Add page borders with precise margin control."""
+    section = doc.sections[0]
+
+    # Set page margins
+    section.top_margin = Inches(1)
+    section.bottom_margin = Inches(1)
+    section.left_margin = Inches(1)
+    section.right_margin = Inches(1)
+
+    sectPr = section._sectPr
+    pgBorders = OxmlElement("w:pgBorders")
+    pgBorders.set(qn("w:offsetFrom"), "page")
+
+    # Define border properties without namespace prefixes
+    border_attrs = {"val": "single", "sz": "12", "space": "24", "color": "000000"}
+
+    # Add borders for all sides
+    for side in ["top", "left", "bottom", "right"]:
+        border = OxmlElement(f"w:{side}")
+
+        # Use qn() when setting attributes
+        for attr, value in border_attrs.items():
+            border.set(qn(f"w:{attr}"), value)
+
+        pgBorders.append(border)
+
+    sectPr.append(pgBorders)
