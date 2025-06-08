@@ -442,7 +442,8 @@ export default function TitlePageForm() {
             <Alert variant="default" className="bg-background border">
               <AlertCircle className="h-4 w-4" />
               <AlertDescription className="text-sm">
-                Faculty data is sourced from the MSRIT IRINS website. Some faculty members listed may no longer be employed or the information may be outdated.
+                Faculty data is sourced from the MSRIT IRINS website. Some faculty members listed may no longer be employed or newer faculty may not be included.
+                Please verify the faculty details before finalizing your title page.
               </AlertDescription>
             </Alert>
             
