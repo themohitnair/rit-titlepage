@@ -4,22 +4,13 @@ import type React from "react";
 import { useState } from "react";
 
 import { generateTitlePage } from "@/lib/api";
+import { Faculty } from '@/lib/types';
+import { FacultyAutocomplete } from '@/components/FacultyAutocomplete';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  AlertCircle,
-  Download,
-  Loader2,
-  Plus,
-  Trash2,
-  Users,
-  BookOpen,
-  School,
-  GraduationCap,
-  FileText,
-} from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -28,12 +19,26 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  FileText,
+  BookOpen,
+  GraduationCap,
+  School,
+  Users,
+  Plus,
+  Trash2,
+  Loader2,
+  Download,
+  AlertCircle,
+} from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
+interface Submitter {
+  name: string;
+  usn: string;
+}
 
-const TitlePageForm: React.FC = () => {
+export default function TitlePageForm() {
   const [formData, setFormData] = useState({
     submission_type: "Assignment",
     subject_name: "",
@@ -42,91 +47,84 @@ const TitlePageForm: React.FC = () => {
     branch: "",
     topic_name: "",
     submitters: {},
+    faculty_name: "",
+    faculty_prefix: "",
     faculty_name_with_title: "",
     designation: "",
     from_ay: new Date().getFullYear(),
     to_ay: new Date().getFullYear() + 1,
   });
 
-  const [submitters, setSubmitters] = useState<{ name: string; usn: string }[]>(
-    [{ name: "", usn: "" }],
-  );
+  const [submitters, setSubmitters] = useState<Submitter[]>([
+    { name: "", usn: "1MS" },
+  ]);
   const [isLoading, setIsLoading] = useState(false);
-  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const [showCompatibilityWarning, setShowCompatibilityWarning] = useState(false);
+
+  const handleInputChange = (field: string, value: string | number) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleSubmitterChange = (
     index: number,
-    field: "name" | "usn",
+    field: keyof Submitter,
     value: string,
   ) => {
-    const newSubmitters = submitters.map((submitter, i) => {
-      if (i === index) {
-        if (field === "usn" && !value.startsWith("1MS") && value !== "") {
-          return { ...submitter, [field]: `1MS${value}` };
-        }
-        return { ...submitter, [field]: value };
+    setSubmitters((prev) => {
+      const updated = [...prev];
+      if (field === "usn") {
+        updated[index][field] = `1MS${value}`;
+      } else {
+        updated[index][field] = value;
       }
-      return submitter;
+      return updated;
     });
-
-    setSubmitters(newSubmitters);
-    const submittersObject = newSubmitters.reduce(
-      (acc, submitter) => {
-        if (submitter.name && submitter.usn) {
-          acc[submitter.name] = submitter.usn;
-        }
-        return acc;
-      },
-      {} as { [key: string]: string },
-    );
-    setFormData((prev) => ({ ...prev, submitters: submittersObject }));
-  };
-
-  const handleInputChange = (name: string, value: string | number) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const addSubmitter = () => {
     if (submitters.length < 7) {
-      const newSubmitters = [...submitters, { name: "", usn: "" }];
-      setSubmitters(newSubmitters);
-      const submittersObject = newSubmitters.reduce(
-        (acc, submitter) => {
-          if (submitter.name && submitter.usn) {
-            acc[submitter.name] = submitter.usn;
-          }
-          return acc;
-        },
-        {} as { [key: string]: string },
-      );
-      setFormData((prev) => ({ ...prev, submitters: submittersObject }));
+      setSubmitters((prev) => [...prev, { name: "", usn: "1MS" }]);
     }
   };
 
   const removeSubmitter = (index: number) => {
-    const newSubmitters = submitters.filter((_, i) => i !== index);
-    setSubmitters(newSubmitters);
-    const submittersObject = newSubmitters.reduce(
-      (acc, submitter) => {
-        if (submitter.name && submitter.usn) {
-          acc[submitter.name] = submitter.usn;
-        }
-        return acc;
-      },
-      {} as { [key: string]: string },
-    );
-    setFormData((prev) => ({ ...prev, submitters: submittersObject }));
+    setSubmitters((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const validateSubmitters = (
-    submitters: { name: string; usn: string }[],
-  ): boolean => {
+  const validateSubmitters = (submitters: Submitter[]) => {
     return submitters.every(
-      (submitter) =>
-        submitter.name.trim() !== "" && submitter.usn.trim() !== "",
+      (submitter) => submitter.name.trim() && submitter.usn.trim() !== "1MS",
     );
+  };
+
+  // Faculty handlers
+  const handleFacultySelect = (faculty: Faculty | null) => {
+    console.log("Selected faculty:", faculty);
+  };
+
+  const handleFacultyNameChange = (name: string) => {
+    setFormData(prev => ({
+      ...prev,
+      faculty_name: name,
+      faculty_name_with_title: prev.faculty_prefix ? `${prev.faculty_prefix}. ${name}` : name
+    }));
+  };
+
+  const handlePrefixChange = (prefix: string) => {
+    setFormData(prev => ({
+      ...prev,
+      faculty_prefix: prefix,
+      faculty_name_with_title: prev.faculty_name ? `${prefix}. ${prev.faculty_name}` : prev.faculty_name
+    }));
+  };
+
+  const handleDesignationChange = (designation: string) => {
+    setFormData(prev => ({
+      ...prev,
+      designation
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -139,12 +137,32 @@ const TitlePageForm: React.FC = () => {
     }
     setIsLoading(true);
     setError(null);
-    setShowCompatibilityWarning(false); // Reset warning on new submission
+    setShowCompatibilityWarning(false);
+
     try {
-      const response = await generateTitlePage(formData);
+      // Convert submitters array to object format expected by API
+      const submittersObject = submitters.reduce(
+        (acc, submitter, index) => {
+          acc[`submitter_${index + 1}_name`] = submitter.name;
+          acc[`submitter_${index + 1}_usn`] = submitter.usn;
+          return acc;
+        },
+        {} as Record<string, string>,
+      );
+
+      // Ensure faculty_name_with_title is properly formatted for the API
+      const submitData = {
+        ...formData,
+        submitters: submittersObject,
+        faculty_name_with_title: formData.faculty_prefix && formData.faculty_name 
+          ? `${formData.faculty_prefix}. ${formData.faculty_name}`
+          : formData.faculty_name_with_title || formData.faculty_name
+      };
+
+      const response = await generateTitlePage(submitData);
       const url = URL.createObjectURL(response);
       setDownloadUrl(url);
-      setShowCompatibilityWarning(true); // Show compatibility warning after successful generation
+      setShowCompatibilityWarning(true);
     } catch (error) {
       console.error("Error generating title page:", error);
       setError(
@@ -167,153 +185,159 @@ const TitlePageForm: React.FC = () => {
         </p>
       </div>
       <div className="px-4">
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center">
-                <FileText className="mr-2 h-4 w-4 text-muted-foreground" />
-                <Label htmlFor="submission_type" className="text-sm">
-                  Submission Type
-                </Label>
-              </div>
-              <Input
-                id="submission_type"
-                value={formData.submission_type}
-                onChange={(e) =>
-                  handleInputChange("submission_type", e.target.value)
-                }
-                placeholder="e.g. Assignment, Report, Project, etc."
-                required
-                className="h-9 focus-visible:ring-primary/50"
-              />
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Basic Information Section */}
+          <div className="space-y-6 p-4 rounded-lg bg-background">
+            <div className="flex items-center space-x-2">
+              <FileText className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-semibold">Basic Information</h3>
             </div>
-
-            <div className="space-y-1">
-              <div className="flex items-center">
-                <BookOpen className="mr-2 h-4 w-4 text-muted-foreground" />
-                <Label htmlFor="subject_code" className="text-sm">
-                  Subject Code
-                </Label>
-              </div>
-              <Input
-                id="subject_code"
-                value={formData.subject_code}
-                onChange={(e) =>
-                  handleInputChange("subject_code", e.target.value)
-                }
-                placeholder="e.g. IS33"
-                required
-                className="h-9 focus-visible:ring-primary/50"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <div className="flex items-center">
-                <BookOpen className="mr-2 h-4 w-4 text-muted-foreground" />
-                <Label htmlFor="subject_name" className="text-sm">
-                  Subject Name
-                </Label>
-              </div>
-              <Input
-                id="subject_name"
-                value={formData.subject_name}
-                onChange={(e) =>
-                  handleInputChange("subject_name", e.target.value)
-                }
-                placeholder="e.g. Data Structures"
-                required
-                className="h-9 focus-visible:ring-primary/50"
-              />
-              <p className="text-xs text-muted-foreground">
-                Text will appear exactly as entered in the document
-              </p>
-            </div>
-
-            <div className="space-y-1">
-              <div className="flex items-center">
-                <GraduationCap className="mr-2 h-4 w-4 text-muted-foreground" />
-                <Label htmlFor="semester_number" className="text-sm">
-                  Semester Number
-                </Label>
-              </div>
-              <Input
-                id="semester_number"
-                type="number"
-                value={formData.semester_number}
-                onChange={(e) => {
-                  const inputValue = e.target.value;
-                  if (inputValue === "" || /^\d+$/.test(inputValue)) {
-                    handleInputChange(
-                      "semester_number",
-                      inputValue === "" ? "" : parseInt(inputValue),
-                    );
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <div className="flex items-center">
+                  <FileText className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <Label htmlFor="submission_type" className="text-sm font-medium">
+                    Submission Type
+                  </Label>
+                </div>
+                <Input
+                  id="submission_type"
+                  value={formData.submission_type}
+                  onChange={(e) =>
+                    handleInputChange("submission_type", e.target.value)
                   }
-                }}
-                onBlur={(e) => {
-                  const value = parseInt(e.target.value);
-                  if (isNaN(value) || value < 1) {
-                    handleInputChange("semester_number", 1);
-                  } else if (value > 8) {
-                    handleInputChange("semester_number", 8);
-                  }
-                }}
-                required
-                min="1"
-                max="8"
-                className="h-9 focus-visible:ring-primary/50"
-              />
-            </div>
-
-            <div className="space-y-1 sm:col-span-2">
-              <div className="flex items-center">
-                <School className="mr-2 h-4 w-4 text-muted-foreground" />
-                <Label htmlFor="branch" className="text-sm">
-                  Branch
-                </Label>
+                  placeholder="e.g. Assignment, Report, Project, etc."
+                  required
+                  className="h-10 focus-visible:ring-primary/50"
+                />
               </div>
-              <Input
-                id="branch"
-                value={formData.branch}
-                onChange={(e) => handleInputChange("branch", e.target.value)}
-                placeholder="e.g. Information Science Engineering"
-                required
-                className="h-9 focus-visible:ring-primary/50"
-              />
-              <p className="text-xs text-muted-foreground">
-                Please enter the full name of your branch (e.g.,
-                &lsquo;Information Science and Engineering&lsquo; instead of
-                &lsquo;ISE&lsquo;)
-              </p>
+
+              <div className="space-y-2">
+                <div className="flex items-center">
+                  <BookOpen className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <Label htmlFor="subject_code" className="text-sm font-medium">
+                    Subject Code
+                  </Label>
+                </div>
+                <Input
+                  id="subject_code"
+                  value={formData.subject_code}
+                  onChange={(e) =>
+                    handleInputChange("subject_code", e.target.value)
+                  }
+                  placeholder="e.g. IS33"
+                  required
+                  className="h-10 focus-visible:ring-primary/50"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center">
+                  <BookOpen className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <Label htmlFor="subject_name" className="text-sm font-medium">
+                    Subject Name
+                  </Label>
+                </div>
+                <Input
+                  id="subject_name"
+                  value={formData.subject_name}
+                  onChange={(e) =>
+                    handleInputChange("subject_name", e.target.value)
+                  }
+                  placeholder="e.g. Data Structures"
+                  required
+                  className="h-10 focus-visible:ring-primary/50"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Text will appear exactly as entered in the document
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center">
+                  <GraduationCap className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <Label htmlFor="semester_number" className="text-sm font-medium">
+                    Semester Number
+                  </Label>
+                </div>
+                <Input
+                  id="semester_number"
+                  type="number"
+                  value={formData.semester_number}
+                  onChange={(e) => {
+                    const inputValue = e.target.value;
+                    if (inputValue === "" || /^\d+$/.test(inputValue)) {
+                      handleInputChange(
+                        "semester_number",
+                        inputValue === "" ? "" : parseInt(inputValue),
+                      );
+                    }
+                  }}
+                  onBlur={(e) => {
+                    const value = parseInt(e.target.value);
+                    if (isNaN(value) || value < 1) {
+                      handleInputChange("semester_number", 1);
+                    } else if (value > 8) {
+                      handleInputChange("semester_number", 8);
+                    }
+                  }}
+                  required
+                  min="1"
+                  max="8"
+                  className="h-10 focus-visible:ring-primary/50"
+                />
+              </div>
+
+              <div className="space-y-2 sm:col-span-2">
+                <div className="flex items-center">
+                  <School className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <Label htmlFor="branch" className="text-sm font-medium">
+                    Branch
+                  </Label>
+                </div>
+                <Input
+                  id="branch"
+                  value={formData.branch}
+                  onChange={(e) => handleInputChange("branch", e.target.value)}
+                  placeholder="e.g. Information Science Engineering"
+                  required
+                  className="h-10 focus-visible:ring-primary/50"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Please enter the full name of your branch (e.g.,
+                  &apos;Information Science and Engineering&apos; instead of &apos;ISE&apos;)
+                </p>
+              </div>
+
+              <div className="space-y-2 sm:col-span-2">
+                <div className="flex items-center">
+                  <FileText className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <Label htmlFor="topic_name" className="text-sm font-medium">
+                    Topic Name
+                  </Label>
+                </div>
+                <Input
+                  id="topic_name"
+                  value={formData.topic_name}
+                  onChange={(e) => handleInputChange("topic_name", e.target.value)}
+                  placeholder="e.g. 20 Solved Leetcode Problems"
+                  required
+                  className="h-10 focus-visible:ring-primary/50"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Text will appear exactly as entered in the document
+                </p>
+              </div>
             </div>
           </div>
 
-          <div className="space-y-1 sm:col-span-2">
-            <div className="flex items-center">
-              <FileText className="mr-2 h-4 w-4 text-muted-foreground" />
-              <Label htmlFor="topic_name" className="text-sm">
-                Topic Name
-              </Label>
-            </div>
-            <Input
-              id="topic_name"
-              value={formData.topic_name}
-              onChange={(e) => handleInputChange("topic_name", e.target.value)}
-              placeholder="e.g. 20 Solved Leetcode Problems"
-              required
-              className="h-9 focus-visible:ring-primary/50"
-            />
-            <p className="text-xs text-muted-foreground">
-              Text will appear exactly as entered in the document
-            </p>
-          </div>
-
-          <Separator className="my-2" />
-
-          <div className="space-y-1">
+          {/* Submitters Section */}
+          <div className="space-y-4 p-4 rounded-lg bg-background">
             <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <Users className="mr-2 h-4 w-4 text-muted-foreground" />
-                <Label className="text-sm">Submitters</Label>
+              <div className="flex items-center space-x-2">
+                <Users className="h-5 w-5 text-primary" />
+                <h3 className="text-lg font-semibold">Submitters</h3>
               </div>
               <Badge variant="outline" className="ml-2 text-xs">
                 {submitters.length}/7 submitters
@@ -383,7 +407,7 @@ const TitlePageForm: React.FC = () => {
                 </TableBody>
               </Table>
             </ScrollArea>
-
+            
             {submitters.length < 7 && (
               <Button
                 type="button"
@@ -407,91 +431,80 @@ const TitlePageForm: React.FC = () => {
             )}
           </div>
 
-          <Separator className="my-2" />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center">
-                <GraduationCap className="mr-2 h-4 w-4 text-muted-foreground" />
-                <Label htmlFor="faculty_name_with_title" className="text-sm">
-                  Faculty Name with Title
-                </Label>
-              </div>
-              <Input
-                id="faculty_name_with_title"
-                value={formData.faculty_name_with_title}
-                onChange={(e) =>
-                  handleInputChange("faculty_name_with_title", e.target.value)
-                }
-                placeholder="eg. Mr. Walter White"
-                required
-                className="h-9 focus-visible:ring-primary/50"
-              />
+          {/* Faculty Information Section */}
+          <div className="space-y-4 p-4 rounded-lg bg-background">
+            <div className="flex items-center space-x-2">
+              <GraduationCap className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-semibold">Faculty Information</h3>
             </div>
+            
+            {/* Data Source Note */}
+            <Alert variant="default" className="bg-background border">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription className="text-sm">
+                Faculty data is sourced from the MSRIT IRINS website. Some faculty members listed may no longer be employed or the information may be outdated.
+              </AlertDescription>
+            </Alert>
+            
+            <FacultyAutocomplete
+              onFacultySelect={handleFacultySelect}
+              facultyName={formData.faculty_name}
+              onFacultyNameChange={handleFacultyNameChange}
+              prefix={formData.faculty_prefix}
+              onPrefixChange={handlePrefixChange}
+              designation={formData.designation}
+              onDesignationChange={handleDesignationChange}
+            />
+          </div>
 
-            <div className="space-y-1">
-              <div className="flex items-center">
-                <GraduationCap className="mr-2 h-4 w-4 text-muted-foreground" />
-                <Label htmlFor="designation" className="text-sm">
-                  Designation
-                </Label>
-              </div>
-              <Input
-                id="designation"
-                placeholder="e.g. Associate Professor"
-                value={formData.designation}
-                onChange={(e) =>
-                  handleInputChange("designation", e.target.value)
-                }
-                required
-                className="h-9 focus-visible:ring-primary/50"
-              />
+          {/* Academic Year Section */}
+          <div className="space-y-4 p-4 rounded-lg bg-background">
+            <div className="flex items-center space-x-2">
+              <School className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-semibold">Academic Year</h3>
             </div>
-
-            <div className="space-y-1">
-              <div className="flex items-center">
-                <School className="mr-2 h-4 w-4 text-muted-foreground" />
-                <Label htmlFor="from_ay" className="text-sm">
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="from_ay" className="text-sm font-medium">
                   From Academic Year
                 </Label>
+                <Input
+                  id="from_ay"
+                  type="number"
+                  value={formData.from_ay}
+                  onChange={(e) =>
+                    handleInputChange("from_ay", Number.parseInt(e.target.value))
+                  }
+                  required
+                  className="h-10 focus-visible:ring-primary/50"
+                />
               </div>
-              <Input
-                id="from_ay"
-                type="number"
-                value={formData.from_ay}
-                onChange={(e) =>
-                  handleInputChange("from_ay", Number.parseInt(e.target.value))
-                }
-                required
-                className="h-9 focus-visible:ring-primary/50"
-              />
-            </div>
 
-            <div className="space-y-1">
-              <div className="flex items-center">
-                <School className="mr-2 h-4 w-4 text-muted-foreground" />
-                <Label htmlFor="to_ay" className="text-sm">
+              <div className="space-y-2">
+                <Label htmlFor="to_ay" className="text-sm font-medium">
                   To Academic Year
                 </Label>
+                <Input
+                  id="to_ay"
+                  type="number"
+                  value={formData.to_ay}
+                  onChange={(e) =>
+                    handleInputChange("to_ay", Number.parseInt(e.target.value))
+                  }
+                  required
+                  className="h-10 focus-visible:ring-primary/50"
+                />
               </div>
-              <Input
-                id="to_ay"
-                type="number"
-                value={formData.to_ay}
-                onChange={(e) =>
-                  handleInputChange("to_ay", Number.parseInt(e.target.value))
-                }
-                required
-                className="h-9 focus-visible:ring-primary/50"
-              />
             </div>
           </div>
 
+          {/* Submit Section */}
           <div className="flex flex-col sm:flex-row gap-3 pt-2">
             <Button
               type="submit"
               onClick={handleSubmit}
-              className="w-full sm:w-auto h-9"
+              className="w-full sm:w-auto h-10"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -506,7 +519,7 @@ const TitlePageForm: React.FC = () => {
             {downloadUrl && (
               <Button
                 variant="outline"
-                className="w-full sm:w-auto h-9"
+                className="w-full sm:w-auto h-10"
                 onClick={() => window.open(downloadUrl, "_blank")}
               >
                 <Download className="mr-2 h-4 w-4" />
@@ -537,6 +550,4 @@ const TitlePageForm: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default TitlePageForm
+}

@@ -11,3 +11,9 @@ export interface SubmissionParams {
     from_ay: number;
     to_ay: number;
 }
+
+export interface Faculty {
+  name: string;
+  prefix: string;
+  designation: string;
+}
