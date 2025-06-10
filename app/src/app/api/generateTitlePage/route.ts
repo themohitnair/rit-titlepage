@@ -1,7 +1,6 @@
-// app/api/generateTitlePage/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,7 +17,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Include the Origin header if required by your backend
     const fastApiResponse = await fetch(`${apiUrl}`, {
       method: 'POST',
       headers: {
