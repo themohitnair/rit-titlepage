@@ -14,7 +14,7 @@ API_KEY = os.getenv("API_KEY")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://rit-titlepage.vercel.app"],
+    allow_origins=["https://ritlepage.pages.dev"],
     allow_credentials=True,
     allow_methods=["POST"],
     allow_headers=["Content-Type"],

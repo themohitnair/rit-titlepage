@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': apiKey,
-        'Origin': 'https://rit-titlepage.vercel.app',
+        'Origin': 'https://ritlepage.pages.dev',
       },
       body: JSON.stringify(body),
     });
