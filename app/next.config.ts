@@ -1,13 +1,7 @@
-import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
+import type { NextConfig } from 'next'
 
-// Setup bindings for local development
-if (process.env.NODE_ENV === 'development') {
-  await setupDevPlatform();
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
 }
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  // your existing config
-};
-
-export default nextConfig;
+export default nextConfig
