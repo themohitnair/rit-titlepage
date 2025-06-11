@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': apiKey,
-        'Origin': 'https://ritlepage.netlify.app',
+        'Origin': 'https://ritlepage.vercel.app',
       },
       body: JSON.stringify(body),
     });
