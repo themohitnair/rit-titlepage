@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Code2 } from "lucide-react";
+import { Code2, Heart } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -10,7 +11,20 @@ import {
 
 export function Footer() {
   return (
-    <footer className="py-6 md:px-8 md:py-0 mx-auto">
+    <footer className="py-6 md:px-8 md:py-0 mx-auto border-t">
+      {/* Ad Funding Message */}
+      <div className="container mx-auto px-4 py-4">
+        <Alert className="border-none bg-muted/30" variant="default">
+          <div className="flex items-center gap-2">
+            <Heart className="h-4 w-4 text-white flex-shrink-0" />
+            <AlertDescription className="text-sm leading-relaxed">
+              This free service is sustained by ads. Please consider disabling your ad blocker 
+              to help keep this project running for fellow RITians. Thank you for your support!
+            </AlertDescription>
+          </div>
+        </Alert>
+      </div>
+
       <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <span>Developed by</span>

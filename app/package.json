@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@cloudflare/next-on-pages": "^1.13.12",
-    "@next/third-parties": "^15.1.0",
+    "@next/third-parties": "^15.3.3",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-scroll-area": "^1.2.3",
     "@radix-ui/react-select": "^2.1.3",

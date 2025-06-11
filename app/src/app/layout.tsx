@@ -2,9 +2,10 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 import { Footer } from "@/components/Footer";
-import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://rit-titlepage.vercel.app",
+    url: "https://ritlepage.netlify.app",
     title: "ritlepage",
     description:
       "Generate professional title pages for assignments and reports at RIT, Bangalore",
@@ -32,6 +33,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4810694769527892" crossOrigin="anonymous" strategy="afterInteractive"></Script>
+      </head>
       <body
         className={`${inter.className} min-h-screen flex flex-col bg-background text-foreground`}
       >
@@ -41,7 +45,9 @@ export default function RootLayout({
           </main>
           <Footer />
         </ThemeProvider>
-        <Analytics />
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        )}
       </body>
     </html>
   );
