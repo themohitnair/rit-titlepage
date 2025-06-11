@@ -64,7 +64,7 @@ def add_page_border_and_margins(doc):
     pgBorders.set(qn("w:offsetFrom"), "page")
 
     # Define border properties without namespace prefixes
-    border_attrs = {"val": "single", "sz": "12", "space": "24", "color": "000000"}
+    border_attrs = {"val": "single", "sz": "20", "space": "24", "color": "000000"}
 
     # Add borders for all sides
     for side in ["top", "left", "bottom", "right"]:
