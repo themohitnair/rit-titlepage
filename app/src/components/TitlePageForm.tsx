@@ -141,19 +141,16 @@ export default function TitlePageForm() {
 
     try {
       // Convert submitters array to object format expected by API
-      const submittersObject = submitters.reduce(
-        (acc, submitter, index) => {
-          acc[`submitter_${index + 1}_name`] = submitter.name;
-          acc[`submitter_${index + 1}_usn`] = submitter.usn;
-          return acc;
-        },
-        {} as Record<string, string>,
-      );
+      const submittersDict = submitters.reduce((acc, submitter) => {
+        if (submitter.name.trim() && submitter.usn.trim() !== "1MS") {
+          acc[submitter.name.trim()] = submitter.usn.trim();
+        }
+        return acc;
+      }, {} as Record<string, string>);
 
-      // Ensure faculty_name_with_title is properly formatted for the API
       const submitData = {
         ...formData,
-        submitters: submittersObject,
+        submitters: submittersDict, // This is the key change
         faculty_name_with_title: formData.faculty_prefix && formData.faculty_name 
           ? `${formData.faculty_prefix}. ${formData.faculty_name}`
           : formData.faculty_name_with_title || formData.faculty_name
