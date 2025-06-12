@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
@@ -33,6 +34,33 @@ import {
   AlertCircle,
 } from "lucide-react";
 
+const MSRIT_BRANCHES = [
+  "Aerospace Engineering",
+  "Architecture",
+  "Artificial Intelligence and Data Science",
+  "Artificial Intelligence and Machine Learning",
+  "Biotechnology",
+  "Chemical Engineering",
+  "Chemistry",
+  "Civil Engineering",
+  "Computer Science and Engineering",
+  "Computer Science and Engineering (Artificial Intelligence)",
+  "Computer Science and Engineering (Cyber Security)",
+  "Electronics and Communication Engineering",
+  "Electronics and Instrumentation Engineering",
+  "Electrical and Electronics Engineering",
+  "Electronics and Telecommunication Engineering",
+  "Humanities",
+  "Industrial Engineering and Management",
+  "Information Science and Engineering",
+  "Mathematics",
+  "Master of Computer Applications",
+  "Mechanical Engineering",
+  "Medical Electronics Engineering",
+  "Physics",
+];
+
+
 interface Submitter {
   name: string;
   usn: string;
@@ -44,7 +72,8 @@ export default function TitlePageForm() {
     subject_name: "",
     subject_code: "",
     semester_number: 1,
-    branch: "",
+    student_branch: "",
+    faculty_branch: "",
     topic_name: "",
     submitters: {},
     faculty_name: "",
@@ -99,7 +128,6 @@ export default function TitlePageForm() {
     );
   };
 
-  // Faculty handlers
   const handleFacultySelect = (faculty: Faculty | null) => {
     console.log("Selected faculty:", faculty);
   };
@@ -117,6 +145,13 @@ export default function TitlePageForm() {
       ...prev,
       faculty_prefix: prefix,
       faculty_name_with_title: prev.faculty_name ? `${prefix}. ${prev.faculty_name}` : prev.faculty_name
+    }));
+  };
+
+  const handleFacultyBranchChange = (branch: string) => {
+    setFormData(prev => ({
+      ...prev,
+      faculty_branch: branch
     }));
   };
 
@@ -140,7 +175,6 @@ export default function TitlePageForm() {
     setShowCompatibilityWarning(false);
 
     try {
-      // Convert submitters array to object format expected by API
       const submittersDict = submitters.reduce((acc, submitter) => {
         if (submitter.name.trim() && submitter.usn.trim() !== "1MS") {
           acc[submitter.name.trim()] = submitter.usn.trim();
@@ -293,17 +327,24 @@ export default function TitlePageForm() {
                     Branch
                   </Label>
                 </div>
-                <Input
-                  id="branch"
-                  value={formData.branch}
-                  onChange={(e) => handleInputChange("branch", e.target.value)}
-                  placeholder="e.g. Information Science Engineering"
+                <Select
+                  value={formData.student_branch}
+                  onValueChange={(value) => handleInputChange("student_branch", value)}
                   required
-                  className="h-10 focus-visible:ring-primary/50"
-                />
+                >
+                  <SelectTrigger className="h-10 bg-background focus-visible:ring-primary/50">
+                    <SelectValue placeholder="Select your branch" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {MSRIT_BRANCHES.map((branch) => (
+                      <SelectItem key={branch} value={branch}>
+                        {branch}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <p className="text-xs text-muted-foreground">
-                  Please enter the full name of your branch (e.g.,
-                  &apos;Information Science and Engineering&apos; instead of &apos;ISE&apos;)
+                  Select your branch from the available options
                 </p>
               </div>
 
@@ -443,6 +484,34 @@ export default function TitlePageForm() {
                 Please verify the faculty details before finalizing your title page.
               </AlertDescription>
             </Alert>
+
+            <div className="space-y-2">
+              <div className="flex items-center">
+                <School className="mr-2 h-4 w-4 text-muted-foreground" />
+                <Label htmlFor="faculty_branch" className="text-sm font-medium">
+                  Faculty Branch
+                </Label>
+              </div>
+              <Select
+                value={formData.faculty_branch}
+                onValueChange={(value) => handleInputChange("faculty_branch", value)}
+                required
+              >
+                <SelectTrigger className="h-10 bg-background focus-visible:ring-primary/50">
+                  <SelectValue placeholder="Select faculty branch" />
+                </SelectTrigger>
+                <SelectContent>
+                  {MSRIT_BRANCHES.map((branch) => (
+                    <SelectItem key={branch} value={branch}>
+                      {branch}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground">
+                Select the faculty member&apos;s department
+              </p>
+            </div>
             
             <FacultyAutocomplete
               onFacultySelect={handleFacultySelect}
@@ -452,6 +521,8 @@ export default function TitlePageForm() {
               onPrefixChange={handlePrefixChange}
               designation={formData.designation}
               onDesignationChange={handleDesignationChange}
+              branch={formData.faculty_branch}
+              onBranchChange={handleFacultyBranchChange}
             />
           </div>
 

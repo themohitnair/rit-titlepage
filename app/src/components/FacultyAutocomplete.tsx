@@ -5,6 +5,7 @@ import { Faculty } from '@/lib/types';
 import { loadFacultyData, searchFaculty } from '@/lib/faculty-data';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface FacultyAutocompleteProps {
   onFacultySelect: (faculty: Faculty | null) => void;
@@ -14,7 +15,35 @@ interface FacultyAutocompleteProps {
   onPrefixChange: (prefix: string) => void;
   designation: string;
   onDesignationChange: (designation: string) => void;
+  branch: string;
+  onBranchChange: (branch: string) => void;
 }
+
+const MSRIT_BRANCHES = [
+  "Aerospace Engineering",
+  "Architecture",
+  "Artificial Intelligence and Data Science",
+  "Artificial Intelligence and Machine Learning",
+  "Biotechnology",
+  "Chemical Engineering",
+  "Chemistry",
+  "Civil Engineering",
+  "Computer Science and Engineering",
+  "Computer Science and Engineering (Artificial Intelligence)",
+  "Computer Science and Engineering (Cyber Security)",
+  "Electronics and Communication Engineering",
+  "Electronics and Instrumentation Engineering",
+  "Electrical and Electronics Engineering",
+  "Electronics and Telecommunication Engineering",
+  "Humanities",
+  "Industrial Engineering and Management",
+  "Information Science and Engineering",
+  "Mathematics",
+  "Master of Computer Applications",
+  "Mechanical Engineering",
+  "Medical Electronics Engineering",
+  "Physics",
+];
 
 export function FacultyAutocomplete({
   onFacultySelect,
@@ -23,7 +52,9 @@ export function FacultyAutocomplete({
   prefix,
   onPrefixChange,
   designation,
-  onDesignationChange
+  onDesignationChange,
+  branch,
+  onBranchChange
 }: FacultyAutocompleteProps) {
   const [facultyData, setFacultyData] = useState<Faculty[]>([]);
   const [suggestions, setSuggestions] = useState<Faculty[]>([]);
@@ -32,7 +63,6 @@ export function FacultyAutocomplete({
   const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Load faculty data on component mount
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
@@ -43,7 +73,6 @@ export function FacultyAutocomplete({
     loadData();
   }, []);
 
-  // Handle faculty name input change
   const handleInputChange = (value: string) => {
     onFacultyNameChange(value);
     
@@ -56,30 +85,26 @@ export function FacultyAutocomplete({
       setShowSuggestions(false);
     }
     
-    // Clear selected faculty if input changes
     if (selectedFaculty && selectedFaculty.name !== value) {
       setSelectedFaculty(null);
       onFacultySelect(null);
     }
   };
 
-  // Handle faculty selection from dropdown - AUTO-FILL AUTOMATICALLY
   const handleFacultySelect = (faculty: Faculty) => {
     setSelectedFaculty(faculty);
     onFacultySelect(faculty);
     onFacultyNameChange(faculty.name);
     
-    // AUTO-FILL the other fields immediately
     onPrefixChange(faculty.prefix);
     onDesignationChange(faculty.designation);
+    onBranchChange(faculty.branch);
     
     setSuggestions([]);
     setShowSuggestions(false);
   };
 
-  // Handle input blur
   const handleBlur = () => {
-    // Delay hiding suggestions to allow click events
     setTimeout(() => setShowSuggestions(false), 150);
   };
 
@@ -113,7 +138,7 @@ export function FacultyAutocomplete({
             className="h-10 focus-visible:ring-primary/50"
           />
           
-          {/* Suggestions Dropdown */}
+          {/* Enhanced Suggestions Dropdown */}
           {showSuggestions && suggestions.length > 0 && (
             <div className="absolute z-50 w-full mt-1 bg-background border rounded-md shadow-lg max-h-48 overflow-y-auto">
               {suggestions.map((faculty, index) => (
@@ -123,7 +148,9 @@ export function FacultyAutocomplete({
                   onClick={() => handleFacultySelect(faculty)}
                 >
                   <div className="font-medium">{faculty.prefix}. {faculty.name}</div>
-                  <div className="text-xs text-muted-foreground">{faculty.designation}</div>
+                  <div className="text-xs text-muted-foreground">
+                    {faculty.designation} • {faculty.branch}
+                  </div>
                 </div>
               ))}
             </div>
@@ -135,7 +162,10 @@ export function FacultyAutocomplete({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="prefix" className="text-sm font-medium">
-            Title/Prefix
+            <span>Prefix</span>
+            {selectedFaculty && (
+              <span className="ml-2 text-xs text-muted-foreground">(editable)</span>
+            )}
           </Label>
           <Input
             id="prefix"
@@ -163,6 +193,28 @@ export function FacultyAutocomplete({
             className="h-10 focus-visible:ring-primary/50"
           />
         </div>
+      </div>
+
+      {/* Branch Field - Full Width */}
+      <div className="space-y-2">
+        <Label htmlFor="faculty_branch" className="text-sm font-medium">
+          <span>Branch/Department</span>
+          {selectedFaculty && (
+            <span className="ml-2 text-xs text-muted-foreground">(editable)</span>
+          )}
+        </Label>
+        <Select value={branch} onValueChange={onBranchChange} required>
+          <SelectTrigger className="h-10 focus:ring-primary/50">
+            <SelectValue placeholder="Select branch/department" />
+          </SelectTrigger>
+          <SelectContent>
+            {MSRIT_BRANCHES.map((branchOption) => (
+              <SelectItem key={branchOption} value={branchOption}>
+                {branchOption}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
     </div>
   );

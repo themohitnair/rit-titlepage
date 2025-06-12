@@ -8,7 +8,7 @@ export async function loadFacultyData(): Promise<Faculty[]> {
   }
 
   try {
-    const response = await fetch('/faculty.jsonl');
+    const response = await fetch('/msrit_faculty_raw.jsonl');
     const text = await response.text();
     
     const faculty: Faculty[] = text

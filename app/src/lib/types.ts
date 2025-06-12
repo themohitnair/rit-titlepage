@@ -3,7 +3,8 @@ export interface SubmissionParams {
     subject_name: string;
     subject_code: string;
     semester_number: number;
-    branch: string;
+    student_branch: string;
+    faculty_branch: string;
     topic_name: string;
     submitters: { [key: string]: string };
     faculty_name_with_title: string;
@@ -16,4 +17,5 @@ export interface Faculty {
   name: string;
   prefix: string;
   designation: string;
+  branch: string;
 }
