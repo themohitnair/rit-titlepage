@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
+  verification: {
+    google: "pub-4810694769527892"
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -33,12 +36,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4810694769527892" crossOrigin="anonymous" strategy="afterInteractive"></Script>
-      </head>
       <body
         className={`${inter.className} min-h-screen flex flex-col bg-background text-foreground`}
       >
+        <Script 
+          async 
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4810694769527892" 
+          crossOrigin="anonymous" 
+          strategy="afterInteractive"
+        />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             {children}
