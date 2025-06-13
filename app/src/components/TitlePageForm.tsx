@@ -485,33 +485,7 @@ export default function TitlePageForm() {
               </AlertDescription>
             </Alert>
 
-            <div className="space-y-2">
-              <div className="flex items-center">
-                <School className="mr-2 h-4 w-4 text-muted-foreground" />
-                <Label htmlFor="faculty_branch" className="text-sm font-medium">
-                  Faculty Branch
-                </Label>
-              </div>
-              <Select
-                value={formData.faculty_branch}
-                onValueChange={(value) => handleInputChange("faculty_branch", value)}
-                required
-              >
-                <SelectTrigger className="h-10 bg-background focus-visible:ring-primary/50">
-                  <SelectValue placeholder="Select faculty branch" />
-                </SelectTrigger>
-                <SelectContent>
-                  {MSRIT_BRANCHES.map((branch) => (
-                    <SelectItem key={branch} value={branch}>
-                      {branch}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <p className="text-xs text-muted-foreground">
-                Select the faculty member&apos;s department
-              </p>
-            </div>
+            
             
             <FacultyAutocomplete
               onFacultySelect={handleFacultySelect}
