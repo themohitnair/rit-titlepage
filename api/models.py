@@ -14,7 +14,7 @@ class SubmissionParams(BaseModel):
     subject_name: str  # Name of the Subject in full
     subject_code: str  # Subject Code
     semester_number: int  # Semester number
-    student_branch: str  # Branch name of submitter in full
+    submitter_branch: str  # Branch name of submitter in full
     faculty_branch: str  # Branch name of the faculty in full
     topic_name: str  # Topic of the Report/Assignment
     submitters: Dict[

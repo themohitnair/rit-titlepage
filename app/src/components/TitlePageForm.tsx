@@ -64,7 +64,7 @@ export default function TitlePageForm() {
     subject_name: "",
     subject_code: "",
     semester_number: 1,
-    student_branch: "",
+    submitter_branch: "",
     faculty_branch: "",
     topic_name: "",
     submitters: {},
@@ -320,8 +320,8 @@ export default function TitlePageForm() {
                   </Label>
                 </div>
                 <Select
-                  value={formData.student_branch}
-                  onValueChange={(value) => handleInputChange("student_branch", value)}
+                  value={formData.submitter_branch}
+                  onValueChange={(value) => handleInputChange("submitter_branch", value)}
                   required
                 >
                   <SelectTrigger className="h-10 bg-background focus-visible:ring-primary/50">
