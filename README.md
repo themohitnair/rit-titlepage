@@ -3,7 +3,7 @@
 A title-page maker for project reports required for projects and assignments in Ramaiah Institute of Technology. Use it [at this link](https://ritlepage.netlify.app)
 
 - [Privacy Policy](https://ritlepage.netlify.app/privacy)
-- [Terms of Service](https://ritlepage.netlifyapp/terms)
+- [Terms of Service](https://ritlepage.netlify.app/terms)
 
 ## Instructions for use
 
