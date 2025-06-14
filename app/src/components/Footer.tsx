@@ -17,7 +17,15 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
           {/* Left Section */}
           <div className="flex items-center justify-center md:justify-start gap-2 text-sm text-muted-foreground">
-            Made with <Heart className="h-4 w-4 fill-red-500 text-red-500" /> by Mohit Nair
+            Made with <Heart className="h-4 w-4 fill-red-500 text-red-500" /> by{" "}
+            <Link
+              href="https://mohitnair.me"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
+            >
+              Mohit Nair
+            </Link>
           </div>
 
           {/* Center Section - Legal Links */}
@@ -42,15 +50,15 @@ export function Footer() {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button variant="ghost" size="sm" asChild>
-                    <a
-                      href="https://github.com/yourusername/your-repo"
+                    <Link
+                      href="https://github.com/themohitnair/ritlepage"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-2"
                     >
                       <Code2 className="h-4 w-4" />
                       View Source
-                    </a>
+                    </Link>
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
