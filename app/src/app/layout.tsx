@@ -6,6 +6,7 @@ import Script from "next/script";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { Header } from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -46,6 +47,9 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="max-w-4xl mx-auto">
+            <Header />
+          </div>
           <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             {children}
           </main>

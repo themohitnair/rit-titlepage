@@ -4,6 +4,7 @@ import type React from "react";
 import { useState } from "react";
 
 import { generateTitlePage } from "@/lib/api";
+import Link from "next/link";
 import { Faculty } from '@/lib/types';
 import { FacultyAutocomplete } from '@/components/FacultyAutocomplete';
 import { Button } from "@/components/ui/button";
@@ -541,6 +542,23 @@ export default function TitlePageForm() {
               </div>
             </div>
           </div>
+
+          <div className="text-xs text-muted-foreground text-center space-y-1 border-t pt-4">
+            <p>
+              By clicking Generate, you acknowledge that no data is stored and information is processed locally. 
+            </p>
+            <p>
+              Read our{" "}
+              <Link href="/privacy" className="text-primary hover:underline">
+                Privacy Policy
+              </Link>{" "}
+              and{" "}
+              <Link href="/terms" className="text-primary hover:underline">
+                Terms of Service
+              </Link>.
+            </p>
+          </div>
+
 
           {/* Submit Section */}
           <div className="flex flex-col sm:flex-row gap-3 pt-2">

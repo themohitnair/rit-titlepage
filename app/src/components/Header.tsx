@@ -4,6 +4,7 @@ import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export function Header() {
   const [mounted, setMounted] = useState(false);
@@ -16,7 +17,11 @@ export function Header() {
   if (!mounted) {
     return (
       <div className="flex justify-between items-center py-4">
-        <h1 className="text-2xl sm:text-3xl font-bold">ritlepage</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold">
+          <Link href="/" className="hover:opacity-80 transition-opacity">
+            ritlepage
+          </Link>
+        </h1>
         <div className="w-9 h-9"></div>
       </div>
     );
@@ -24,7 +29,11 @@ export function Header() {
 
   return (
     <div className="flex justify-between items-center py-4">
-      <h1 className="text-2xl sm:text-3xl font-bold">ritlepage</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold">
+        <Link href="/" className="hover:opacity-80 transition-opacity">
+          ritlepage
+        </Link>
+      </h1>
       <Button
         variant="ghost"
         size="icon"

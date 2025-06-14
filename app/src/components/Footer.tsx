@@ -11,65 +11,61 @@ import {
 
 export function Footer() {
   return (
-    <footer className="py-6 md:px-8 md:py-0 mx-auto border-t">
-      {/* Ad Funding Message */}
-      <div className="container mx-auto px-4 py-4">
-        <Alert className="border-none bg-muted/30" variant="default">
-          <div className="flex items-center gap-2">
-            <Heart className="h-4 w-4 text-white flex-shrink-0" />
-            <AlertDescription className="text-sm leading-relaxed">
-              This free service is sustained by ads. Please consider disabling your ad blocker 
-              to help keep this project running for fellow RITians. Thank you for your support!
-            </AlertDescription>
+    <footer className="border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto px-4 py-6 md:py-8">
+        {/* Grid Layout for Perfect Centering */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+          {/* Left Section */}
+          <div className="flex items-center justify-center md:justify-start gap-2 text-sm text-muted-foreground">
+            Made with <Heart className="h-4 w-4 fill-red-500 text-red-500" /> by Mohit Nair
           </div>
+
+          {/* Center Section - Legal Links */}
+          <div className="flex items-center justify-center gap-4 text-sm order-last md:order-none">
+            <Link
+              href="/privacy"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Terms of Service
+            </Link>
+          </div>
+
+          {/* Right Section */}
+          <div className="flex justify-center md:justify-end">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="sm" asChild>
+                    <a
+                      href="https://github.com/yourusername/your-repo"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2"
+                    >
+                      <Code2 className="h-4 w-4" />
+                      View Source
+                    </a>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Check out the source code</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        </div>
+
+        <Alert className="mt-6 md:mt-8">
+          <AlertDescription className="text-xs text-center">
+            This tool generates academic documents. Please verify all information before submission.
+          </AlertDescription>
         </Alert>
-      </div>
-
-      <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <span>Developed by</span>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="link" className="h-auto p-0" asChild>
-                  <Link
-                    href="https://github.com/themohitnair"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-medium"
-                  >
-                    Mohit Nair
-                  </Link>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Visit GitHub profile</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-
-        <div className="flex items-center gap-4 md:gap-6 mt-4 md:mt-0">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
-                  <Link
-                    href="https://github.com/themohitnair/ritlepage"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Source code"
-                  >
-                    <Code2 className="h-4 w-4" />
-                  </Link>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>View source code</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
       </div>
     </footer>
   );
