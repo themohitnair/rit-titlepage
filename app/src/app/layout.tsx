@@ -2,7 +2,6 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Script from "next/script";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { GoogleAnalytics } from '@next/third-parties/google'
@@ -37,15 +36,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4810694769527892"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body
         className={`${inter.className} min-h-screen flex flex-col bg-background text-foreground`}
       >
-        <Script 
-          async 
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4810694769527892" 
-          crossOrigin="anonymous" 
-          strategy="afterInteractive"
-        />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="max-w-4xl mx-auto">
             <Header />
