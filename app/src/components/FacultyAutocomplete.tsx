@@ -6,6 +6,7 @@ import { loadFacultyData, searchFaculty } from '@/lib/faculty-data';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 
 interface FacultyAutocompleteProps {
   onFacultySelect: (faculty: Faculty | null) => void;
@@ -115,9 +116,9 @@ export function FacultyAutocomplete({
         <Label htmlFor="faculty-name" className="text-sm font-medium flex items-center gap-2">
           Faculty Name
           {selectedFaculty && (
-            <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded">
+            <Badge variant="secondary" className="text-xs bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 border-green-200 dark:border-green-800">
               Auto-filled
-            </span>
+            </Badge>
           )}
         </Label>
         <div className="relative">
@@ -134,19 +135,19 @@ export function FacultyAutocomplete({
             className="h-10 focus-visible:ring-primary/50"
           />
 
-          {/* Enhanced Suggestions Dropdown */}
+          {/* Theme-aware Suggestions Dropdown */}
           {showSuggestions && suggestions.length > 0 && (
-            <div className="absolute z-50 w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-auto">
+            <div className="absolute z-50 w-full mt-1 bg-popover border border-border rounded-md shadow-lg max-h-60 overflow-auto">
               {suggestions.map((faculty, index) => (
                 <div
                   key={index}
-                  className="px-3 py-2 cursor-pointer hover:bg-gray-50 border-b last:border-b-0"
+                  className="px-3 py-2 cursor-pointer hover:bg-accent hover:text-accent-foreground border-b border-border/50 last:border-b-0 transition-colors"
                   onClick={() => handleFacultySelect(faculty)}
                 >
-                  <div className="font-medium text-sm">
+                  <div className="font-medium text-sm text-foreground">
                     {faculty.prefix}. {faculty.name}
                   </div>
-                  <div className="text-xs text-gray-500 truncate">
+                  <div className="text-xs text-muted-foreground truncate">
                     {faculty.designation} • {faculty.branch}
                   </div>
                 </div>
@@ -162,9 +163,9 @@ export function FacultyAutocomplete({
           <Label htmlFor="prefix" className="text-sm font-medium flex items-center gap-2">
             Prefix
             {selectedFaculty && (
-              <span className="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded">
+              <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-800">
                 (editable)
-              </span>
+              </Badge>
             )}
           </Label>
           <Input
@@ -181,9 +182,9 @@ export function FacultyAutocomplete({
           <Label htmlFor="designation" className="text-sm font-medium flex items-center gap-2">
             Designation
             {selectedFaculty && (
-              <span className="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded">
+              <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-800">
                 (editable)
-              </span>
+              </Badge>
             )}
           </Label>
           <Input
@@ -202,9 +203,9 @@ export function FacultyAutocomplete({
         <Label htmlFor="branch" className="text-sm font-medium flex items-center gap-2">
           Branch/Department
           {selectedFaculty && (
-            <span className="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded">
+            <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-800">
               (editable)
-            </span>
+            </Badge>
           )}
         </Label>
         <Select value={branch} onValueChange={onBranchChange} required>
