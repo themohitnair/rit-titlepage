@@ -12,15 +12,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   FileText,
@@ -372,101 +363,83 @@ export default function TitlePageForm() {
           </div>
 
           {/* Submitters Section */}
-          <div className="space-y-4 p-4 rounded-lg bg-background">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Users className="h-5 w-5 text-primary" />
-                <h3 className="text-lg font-semibold">Submitters</h3>
+          <div className="space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <h3 className="text-lg font-semibold flex items-center gap-2">
+                <Users className="h-5 w-5" />
+                Submitters
+              </h3>
+              <div className="flex items-center gap-2">
+                <Badge variant="secondary" className="text-xs">
+                  {submitters.length}/7 submitters
+                </Badge>
+                <span className="text-xs text-muted-foreground hidden sm:inline">
+                  Maximum 7 submitters allowed
+                </span>
               </div>
-              <Badge variant="outline" className="ml-2 text-xs">
-                {submitters.length}/7 submitters
-              </Badge>
             </div>
-            <p className="text-xs text-muted-foreground">
-              Maximum 7 submitters allowed
-            </p>
-            <ScrollArea className="h-[210px] w-full border rounded-md">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-b-0">
-                    <TableHead className="w-1/2 py-2 px-2 text-xs sticky top-0 bg-background z-10">
-                      Name
-                    </TableHead>
-                    <TableHead className="w-1/2 py-2 px-2 text-xs sticky top-0 bg-background z-10">
-                      USN
-                    </TableHead>
-                    <TableHead className="w-[50px] py-2 px-2 sticky top-0 bg-background z-10"></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {submitters.map((submitter, index) => (
-                    <TableRow key={index} className="border-b-0">
-                      <TableCell className="p-1">
-                        <Input
-                          value={submitter.name}
-                          onChange={(e) =>
-                            handleSubmitterChange(index, "name", e.target.value)
-                          }
-                          required
-                          className="h-9 focus-visible:ring-primary/50"
-                        />
-                      </TableCell>
-                      <TableCell className="p-1">
-                        <div className="flex">
-                          <div className="bg-muted px-2 flex items-center rounded-l-md border border-r-0 border-input text-xs">
-                            1MS
-                          </div>
-                          <Input
-                            value={submitter.usn.replace("1MS", "")}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              handleSubmitterChange(index, "usn", value);
-                            }}
-                            placeholder="Enter USN"
-                            required
-                            className="h-9 focus-visible:ring-primary/50 rounded-l-none"
-                          />
-                        </div>
-                      </TableCell>
-                      <TableCell className="p-1">
-                        {index > 0 && (
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => removeSubmitter(index)}
-                            className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10 rounded-full"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </ScrollArea>
-            
+
+            {/* Mobile-friendly submitters list */}
+            <div className="space-y-3">
+              {submitters.map((submitter, index) => (
+                <div key={index} className="grid grid-cols-1 sm:grid-cols-12 gap-2 p-3 border rounded-lg">
+                  <div className="sm:col-span-5">
+                    <Label className="text-xs text-muted-foreground mb-1 block sm:hidden">Name</Label>
+                    <Input
+                      value={submitter.name}
+                      onChange={(e) => handleSubmitterChange(index, "name", e.target.value)}
+                      placeholder="Enter full name"
+                      required
+                      className="h-9 focus-visible:ring-primary/50"
+                    />
+                  </div>
+                  
+                  <div className="sm:col-span-5">
+                    <Label className="text-xs text-muted-foreground mb-1 block sm:hidden">USN</Label>
+                    <div className="flex">
+                      <span className="inline-flex items-center px-3 text-sm bg-muted border border-r-0 rounded-l-md">
+                        1MS
+                      </span>
+                      <Input
+                        value={submitter.usn.replace("1MS", "")}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          handleSubmitterChange(index, "usn", value);
+                        }}
+                        placeholder="Enter USN"
+                        required
+                        className="h-9 focus-visible:ring-primary/50 rounded-l-none"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="sm:col-span-2 flex justify-end">
+                    {index > 0 && (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeSubmitter(index)}
+                        className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10 rounded-full p-0"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
             {submitters.length < 7 && (
               <Button
                 type="button"
                 variant="outline"
-                size="sm"
                 onClick={addSubmitter}
-                className="mt-2 h-8 text-xs"
+                className="w-full sm:w-auto"
               >
-                <Plus className="mr-1 h-3 w-3" />
+                <Plus className="h-4 w-4 mr-2" />
                 Add Submitter
               </Button>
-            )}
-            {submitters.length >= 7 && (
-              <Alert variant="destructive" className="mt-2">
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Maximum submitters reached</AlertTitle>
-                <AlertDescription>
-                  You can add a maximum of 7 submitters.
-                </AlertDescription>
-              </Alert>
             )}
           </div>
 
@@ -502,44 +475,32 @@ export default function TitlePageForm() {
           </div>
 
           {/* Academic Year Section */}
-          <div className="space-y-4 p-4 rounded-lg bg-background">
-            <div className="flex items-center space-x-2">
-              <School className="h-5 w-5 text-primary" />
-              <h3 className="text-lg font-semibold">Academic Year</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="from_ay">From Academic Year</Label>
+              <Input
+                id="from_ay"
+                type="number"
+                value={formData.from_ay}
+                onChange={(e) => handleInputChange("from_ay", Number.parseInt(e.target.value))}
+                min="2000"
+                max="3000"
+                required
+                className="h-10 focus-visible:ring-primary/50"
+              />
             </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="from_ay" className="text-sm font-medium">
-                  From Academic Year
-                </Label>
-                <Input
-                  id="from_ay"
-                  type="number"
-                  value={formData.from_ay}
-                  onChange={(e) =>
-                    handleInputChange("from_ay", Number.parseInt(e.target.value))
-                  }
-                  required
-                  className="h-10 focus-visible:ring-primary/50"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="to_ay" className="text-sm font-medium">
-                  To Academic Year
-                </Label>
-                <Input
-                  id="to_ay"
-                  type="number"
-                  value={formData.to_ay}
-                  onChange={(e) =>
-                    handleInputChange("to_ay", Number.parseInt(e.target.value))
-                  }
-                  required
-                  className="h-10 focus-visible:ring-primary/50"
-                />
-              </div>
+            <div className="space-y-2">
+              <Label htmlFor="to_ay">To Academic Year</Label>
+              <Input
+                id="to_ay"
+                type="number"
+                value={formData.to_ay}
+                onChange={(e) => handleInputChange("to_ay", Number.parseInt(e.target.value))}
+                min="2020"
+                max="2030"
+                required
+                className="h-10 focus-visible:ring-primary/50"
+              />
             </div>
           </div>
 

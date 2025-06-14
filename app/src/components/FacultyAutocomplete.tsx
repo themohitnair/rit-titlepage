@@ -112,22 +112,18 @@ export function FacultyAutocomplete({
     <div className="space-y-4">
       {/* Faculty Search Input */}
       <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <Label htmlFor="faculty_name" className="text-sm font-medium">
-            Faculty Name
-          </Label>
+        <Label htmlFor="faculty-name" className="text-sm font-medium flex items-center gap-2">
+          Faculty Name
           {selectedFaculty && (
-            <span className="text-xs text-green-600 flex items-center">
-              <div className="w-2 h-2 bg-green-500 rounded-full mr-1"></div>
+            <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded">
               Auto-filled
             </span>
           )}
-        </div>
-        
+        </Label>
         <div className="relative">
           <Input
+            id="faculty-name"
             ref={inputRef}
-            id="faculty_name"
             value={facultyName}
             onChange={(e) => handleInputChange(e.target.value)}
             onFocus={() => facultyName && setSuggestions(searchFaculty(facultyName, facultyData))}
@@ -137,18 +133,20 @@ export function FacultyAutocomplete({
             required
             className="h-10 focus-visible:ring-primary/50"
           />
-          
+
           {/* Enhanced Suggestions Dropdown */}
           {showSuggestions && suggestions.length > 0 && (
-            <div className="absolute z-50 w-full mt-1 bg-background border rounded-md shadow-lg max-h-48 overflow-y-auto">
+            <div className="absolute z-50 w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-auto">
               {suggestions.map((faculty, index) => (
                 <div
-                  key={`${faculty.name}-${index}`}
-                  className="px-3 py-2 hover:bg-muted cursor-pointer text-sm border-b last:border-b-0"
+                  key={index}
+                  className="px-3 py-2 cursor-pointer hover:bg-gray-50 border-b last:border-b-0"
                   onClick={() => handleFacultySelect(faculty)}
                 >
-                  <div className="font-medium">{faculty.prefix}. {faculty.name}</div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="font-medium text-sm">
+                    {faculty.prefix}. {faculty.name}
+                  </div>
+                  <div className="text-xs text-gray-500 truncate">
                     {faculty.designation} • {faculty.branch}
                   </div>
                 </div>
@@ -158,13 +156,15 @@ export function FacultyAutocomplete({
         </div>
       </div>
 
-      {/* Prefix and Designation - Two Column Grid */}
+      {/* Responsive Grid for Prefix and Designation */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="prefix" className="text-sm font-medium">
-            <span>Prefix</span>
+          <Label htmlFor="prefix" className="text-sm font-medium flex items-center gap-2">
+            Prefix
             {selectedFaculty && (
-              <span className="ml-2 text-xs text-muted-foreground">(editable)</span>
+              <span className="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded">
+                (editable)
+              </span>
             )}
           </Label>
           <Input
@@ -178,10 +178,12 @@ export function FacultyAutocomplete({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="designation" className="text-sm font-medium">
-            <span>Designation</span>
+          <Label htmlFor="designation" className="text-sm font-medium flex items-center gap-2">
+            Designation
             {selectedFaculty && (
-              <span className="ml-2 text-xs text-muted-foreground">(editable)</span>
+              <span className="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded">
+                (editable)
+              </span>
             )}
           </Label>
           <Input
@@ -197,17 +199,19 @@ export function FacultyAutocomplete({
 
       {/* Branch Field - Full Width */}
       <div className="space-y-2">
-        <Label htmlFor="faculty_branch" className="text-sm font-medium">
-          <span>Branch/Department</span>
+        <Label htmlFor="branch" className="text-sm font-medium flex items-center gap-2">
+          Branch/Department
           {selectedFaculty && (
-            <span className="ml-2 text-xs text-muted-foreground">(editable)</span>
+            <span className="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded">
+              (editable)
+            </span>
           )}
         </Label>
         <Select value={branch} onValueChange={onBranchChange} required>
-          <SelectTrigger className="h-10 focus:ring-primary/50">
+          <SelectTrigger className="h-10 focus-visible:ring-primary/50">
             <SelectValue placeholder="Select branch/department" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="max-h-60">
             {MSRIT_BRANCHES.map((branchOption) => (
               <SelectItem key={branchOption} value={branchOption}>
                 {branchOption}
