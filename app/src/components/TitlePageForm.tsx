@@ -379,7 +379,6 @@ export default function TitlePageForm() {
               </div>
             </div>
 
-            {/* Mobile-friendly submitters list */}
             <div className="space-y-3">
               {submitters.map((submitter, index) => (
                 <div key={index} className="grid grid-cols-1 sm:grid-cols-12 gap-2 p-3 border rounded-lg">
@@ -443,14 +442,12 @@ export default function TitlePageForm() {
             )}
           </div>
 
-          {/* Faculty Information Section */}
           <div className="space-y-4 p-4 rounded-lg bg-background">
             <div className="flex items-center space-x-2">
               <GraduationCap className="h-5 w-5 text-primary" />
               <h3 className="text-lg font-semibold">Faculty Information</h3>
             </div>
             
-            {/* Data Source Note */}
             <Alert variant="default" className="bg-background border">
               <AlertCircle className="h-4 w-4" />
               <AlertDescription className="text-sm">
@@ -458,9 +455,6 @@ export default function TitlePageForm() {
                 Please verify the faculty details before finalizing your title page.
               </AlertDescription>
             </Alert>
-
-            
-            
             <FacultyAutocomplete
               onFacultySelect={handleFacultySelect}
               facultyName={formData.faculty_name}
@@ -474,7 +468,6 @@ export default function TitlePageForm() {
             />
           </div>
 
-          {/* Academic Year Section */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="from_ay">From Academic Year</Label>
@@ -521,7 +514,6 @@ export default function TitlePageForm() {
           </div>
 
 
-          {/* Submit Section */}
           <div className="flex flex-col sm:flex-row gap-3 pt-2">
             <Button
               type="submit"

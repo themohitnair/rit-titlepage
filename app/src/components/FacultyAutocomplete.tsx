@@ -135,7 +135,6 @@ export function FacultyAutocomplete({
             className="h-10 focus-visible:ring-primary/50"
           />
 
-          {/* Theme-aware Suggestions Dropdown */}
           {showSuggestions && suggestions.length > 0 && (
             <div className="absolute z-50 w-full mt-1 bg-popover border border-border rounded-md shadow-lg max-h-60 overflow-auto">
               {suggestions.map((faculty, index) => (

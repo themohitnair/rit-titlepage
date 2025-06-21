@@ -13,7 +13,6 @@ export function Footer() {
   return (
     <footer className="border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 py-6 md:py-8">
-        {/* Grid Layout for Perfect Centering */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
           {/* Left Section */}
           <div className="flex items-center justify-center md:justify-start gap-2 text-sm text-muted-foreground">
