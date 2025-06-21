@@ -47,7 +47,7 @@ export default function RootLayout({
         className={`${inter.className} min-h-screen flex flex-col bg-background text-foreground`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="max-w-4xl mx-auto">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <Header />
           </div>
           <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
@@ -62,3 +62,4 @@ export default function RootLayout({
     </html>
   );
 }
+
