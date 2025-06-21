@@ -14,7 +14,7 @@ def gen_filled_doc(data: SubmissionParams, doc: Document):
         "semester_number": str(data.semester_number),
         "submitter_branch": data.submitter_branch.title(),
         "faculty_branch": data.faculty_branch.title(),
-        "faculty_name": data.faculty_name_with_title.title(),
+        "faculty_name": data.faculty_name_with_title.upper(),
         "designation": data.designation.title(),
         "from_ay": str(data.from_ay),
         "to_ay": str(data.to_ay),
