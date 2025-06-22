@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "ritlepage",
   description:
-    "Generate professional title pages for assignments and reports at RIT, Bangalore",
+    "Generate professional title pages for assignments and reports at RIT Bangalore",
   icons: {
     icon: "/favicon.svg",
   },
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     url: "https://ritlepage.netlify.app",
     title: "ritlepage",
     description:
-      "Generate professional title pages for assignments and reports at RIT, Bangalore",
+      "Generate professional title pages for assignments and reports at RIT Bangalore",
   },
 };
 
